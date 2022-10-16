@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: head (titulo='Usuarios Registrados')">Usuarios Registrados</head>
+<head th:replace="fragments :: head (titulo='Descripcion de usuario')">Descripción de Usuario</head>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
     <a class="navbar-brand" href="#">To Do List</a>
@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/usuariosRegistrados">Usuarios Registrados <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/descripcionUsuario">Descripcion usuario <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown my-2 my-lg-0">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -32,34 +32,38 @@
 
     <div class="row mt-3">
         <div class="col">
-            <h2 th:text="'Listado de usuarios' ></h2>
+            <h2 th:text="'Descripción de Usuario' ></h2>
         </div>
     </div>
 
     <div class="row mt-3">
-        <div class="col">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Email</th>
-                    <th>Descripción</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="usuario: ${usuarios}">
-                    <td th:text="${usuario.getId()}"></td>
-                    <td th:text="${usuario.getEmail()}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="col">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Fecha de Nacimiento</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+
+                        <td th:text="${usuario.getId()}"></td>
+                        <td th:text="${usuario.getNombre()}"></td>
+                        <td th:text="${usuario.getEmail()}"></td>
+                        <td th:text="${usuario.getFechaNacimento()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
                 <a class="btn btn-link" href="/logout">Salir</a></p>
+            </div>
         </div>
+
     </div>
 
-</div>
-
-<div th:replace="fragments::javascript"/>
+    <div th:replace="fragments::javascript"/>
 
 </div>>
 </body>

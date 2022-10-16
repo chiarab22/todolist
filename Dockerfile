@@ -1,12 +1,9 @@
-FROM openjdk:8-jdk-alpine
-COPY target/*.jar app.jar
-
-
-# Añadida la opción java.security.egd para evitar que el servidor se cuelgue en Digitalocean
-# al hacer una petición que usa el HttpSession.
-# El problema está relacionado con el acceso al fichero /dev/random para inicializar el generador de números aleatorios
-# https://programmer.help/blogs/page-opening-stuck-when-using-httpsession-in-springboot-under-openjdk.html
-# Más información:
-# https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","/app.jar"]
+FROM maven:3.6.3 AS maven
+RUN mvn package
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+FROM adoptopenjdk/openjdk11:alpine-jre
+ARG JAR_FILE=todolist-0.0.1-SNAPSHOT.jar
+WORKDIR /opt/app
+COPY --from=maven /usr/src/app/target/${JAR_FILE} /opt/app/
+ENTRYPOINT ["java","-jar","todolist-0.0.1-SNAPSHOT.jar"]

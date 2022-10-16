@@ -5,6 +5,7 @@ import madstodolist.controller.exception.UsuarioNoLogeadoException;
 import madstodolist.controller.exception.TareaNotFoundException;
 import madstodolist.model.Tarea;
 import madstodolist.model.Usuario;
+import madstodolist.model.UsuarioRepository;
 import madstodolist.service.TareaService;
 import madstodolist.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +27,15 @@ public class UsuarioRegistradoController {
     TareaService tareaService;
 
     @Autowired
-    ManagerUserSession managerUserSession;
+    UsuarioRepository usuarioRepository;
 
-    private void comprobarUsuarioLogeado(Long idUsuario) {
-        Long idUsuarioLogeado = managerUserSession.usuarioLogeado();
-        if (!idUsuario.equals(idUsuarioLogeado))
-            throw new UsuarioNoLogeadoException();
+    @GetMapping("/registrados")
+    public
+    String usuarioRegistrado(Model model){
+        List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
+        model.addAttribute("usuario", usuarios);
+        return "usuariosRegistrados";
     }
-
-    @GetMapping("/usuarios/{id}/tareas/nueva")
-    public String formNuevaTarea(@PathVariable(value="id") Long idUsuario,
-                                 @ModelAttribute TareaData tareaData, Model model,
-                                 HttpSession session) {
-
-        comprobarUsuarioLogeado(idUsuario);
-
-        Usuario usuario = usuarioService.findById(idUsuario);
-        model.addAttribute("usuario", usuario);
-        return "formNuevaTarea";
     }
 
     @PostMapping("/usuarios/{id}/tareas/nueva")
@@ -103,20 +95,3 @@ public class UsuarioRegistradoController {
         flash.addFlashAttribute("mensaje", "Tarea modificada correctamente");
         return "redirect:/usuarios/" + tarea.getUsuario().getId() + "/tareas";
     }
-
-    @DeleteMapping("/tareas/{id}")
-    @ResponseBody
-    // La anotación @ResponseBody sirve para que la cadena devuelta sea la resupuesta
-    // de la petición HTTP, en lugar de una plantilla thymeleaf
-    public String borrarTarea(@PathVariable(value="id") Long idTarea, RedirectAttributes flash, HttpSession session) {
-        Tarea tarea = tareaService.findById(idTarea);
-        if (tarea == null) {
-            throw new TareaNotFoundException();
-        }
-
-        comprobarUsuarioLogeado(tarea.getUsuario().getId());
-
-        tareaService.borraTarea(idTarea);
-        return "";
-    }
-}

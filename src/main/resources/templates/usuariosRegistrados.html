@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: head (titulo='Usuarios Registrados')">Usuarios Registrados</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" href="#">To Do List</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/usuariosRegistrados">Tareas <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown my-2 my-lg-0">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Cuenta</a>
+                    <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<body>
+<div class="container-fluid">
+
+    <div class="row mt-3">
+        <div class="col">
+            <h2 th:text="'Listado de usuarios' ></h2>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario: ${usuarios}">
+                    <td th:text="${usuario.getId()}"></td>
+                    <td th:text="${usuario.getEmail()}"></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{/tareas/{id}/editar(id=${tarea.id})}"/>editar</a>
+                        <button class="btn btn-danger btn-xs" onmouseover="" style="cursor: pointer;"
+                                th:onclick="'del(\'/tareas/' + ${tarea.id} + '\')'">borrar</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+                <a class="btn btn-link" href="/logout">Salir</a></p>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments::javascript"/>
+
+</div>>
+</body>
+</html>

@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: head (titulo='Descripcion')">Descripción de Usuario</head>
+
+<head th:replace="fragments :: head (titulo='Descripcion de usuario')">Descripción de Usuario</head>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-    <a class="navbar-brand" href="#">todolist</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">To Do List</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/listaTareas">Tareas<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/descripcionUsuario">Descripcion usuario <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown my-2 my-lg-0">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Cuenta</a>
                     <a class="dropdown-item" href="/logout">Cerrar sesión</a>
@@ -22,13 +26,16 @@
         </ul>
     </div>
 </nav>
+
 <body>
 <div class="container-fluid">
+
     <div class="row mt-3">
         <div class="col">
-            <h2 th:text="'Descripción de Usuario'"></h2>
+            <h2 th:text="'Descripción de Usuario' ></h2>
         </div>
     </div>
+
     <div class="row mt-3">
             <div class="col">
                 <table class="table table-striped">
@@ -42,16 +49,22 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td th:text="${usuario.id}"></td>
-                        <td th:text="${usuario.nombre}"></td>
-                        <td th:text="${usuario.email}"></td>
-                        <td th:text="${usuario.fechaNacimiento}"></td>
+
+                        <td th:text="${usuario.getId()}"></td>
+                        <td th:text="${usuario.getNombre()}"></td>
+                        <td th:text="${usuario.getEmail()}"></td>
+                        <td th:text="${usuario.getFechaNacimento()}"></td>
                     </tr>
                     </tbody>
                 </table>
+                <a class="btn btn-link" href="/logout">Salir</a></p>
             </div>
         </div>
+
     </div>
+
     <div th:replace="fragments::javascript"/>
+
+</div>>
 </body>
 </html>

@@ -1,3 +1,5 @@
+Realizada por Chiara Boccaletti
+
 # Aplicación inicial ToDoList
 
 Aplicación ToDoList con Spring Boot y plantillas Thymeleaf.

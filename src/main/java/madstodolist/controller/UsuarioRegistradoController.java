@@ -1,9 +1,6 @@
 package madstodolist.controller;
 
-import madstodolist.authentication.ManagerUserSession;
 import madstodolist.controller.exception.UsuarioNoLogeadoException;
-import madstodolist.controller.exception.TareaNotFoundException;
-import madstodolist.model.Tarea;
 import madstodolist.model.Usuario;
 import madstodolist.model.UsuarioRepository;
 import madstodolist.service.TareaService;
@@ -12,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -36,15 +33,13 @@ public class UsuarioRegistradoController {
         return "usuariosRegistrados";
     }
 
-
-
-    @GetMapping("/usuarios/:{id}")
-    public String UsuarioRegistradoById(@PathVariable(value="id") Long idUsuario, Model model){
+    @GetMapping("/registrados/{id}")
+    public String UsuarioRegistradoById(@PathVariable(value="id") Long idUsuario, Model model,  HttpSession session){
     Usuario usuarioId = usuarioService.findById(idUsuario);
-    if(usuarioId!= null){
-        return "descripcionUsuario";
+    if(usuarioId == null){
+        throw new UsuarioNoLogeadoException();
     }
-    throw new UsuarioNoLogeadoException();
+    return "descripcionUsuario";
     }
 }
 
